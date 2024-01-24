@@ -1,13 +1,21 @@
 import SectionHeader from "../SectionHeader.js"
 import TaskDetail from "./TaskDetail.js"
+import CreateTaskButton from "./CreateTaskButton.js"
 
-//, onConfirmAddTask
-
-function NewTask({ task, onChangeTaskName }) {
+function NewTask({ task, onChangeTaskName, onSelectInterval, onCreateTask }) {
   return (
     <>
-      <TaskDetail task={task} onChangeTaskName={onChangeTaskName} />
       <SectionHeader />
+      <TaskDetail
+        task={task}
+        onChangeTaskName={onChangeTaskName}
+        onSelectInterval={onSelectInterval}
+      />
+      <SectionHeader />
+      <CreateTaskButton
+        disabled={!task?.name?.trim()}
+        onCreateTask={onCreateTask}
+      />
     </>
   )
 }

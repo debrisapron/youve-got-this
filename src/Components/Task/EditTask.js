@@ -2,13 +2,14 @@ import SectionHeader from "../SectionHeader.js"
 import TaskDetail from "./TaskDetail.js"
 import DeleteTaskButton from "./DeleteTaskButton.js"
 
-function EditTask({ task, onChangeTaskName, onDeleteTask, onOpenIntervals }) {
+function EditTask({ task, onChangeTaskName, onDeleteTask, onSelectInterval }) {
   return (
     <>
+      <SectionHeader />
       <TaskDetail
         task={task}
         onChangeTaskName={onChangeTaskName}
-        onOpenIntervals={onOpenIntervals}
+        onSelectInterval={onSelectInterval}
       />
       <SectionHeader />
       <DeleteTaskButton onDeleteTask={onDeleteTask} />

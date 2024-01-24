@@ -1,4 +1,13 @@
+import * as nanoid from "nanoid/non-secure"
 import { Temporal } from "@js-temporal/polyfill"
+
+export function compose(...functions) {
+  return (input) => {
+    return functions.reduceRight((acc, fn) => {
+      return fn(acc)
+    }, input)
+  }
+}
 
 export function pluralS(n) {
   return n === 1 ? "" : "s"
@@ -51,4 +60,8 @@ export function days(n) {
 
 export function now() {
   return Temporal.Now.instant()
+}
+
+export function uuid() {
+  return nanoid.nanoid()
 }

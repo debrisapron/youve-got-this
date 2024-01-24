@@ -6,7 +6,7 @@ import * as utils from "../../utils.js"
 function getTasksReadout(tasks) {
   const count = tasks.length
   if (count === 0) {
-    return "No tasks yet!"
+    return "No tasks yet! Add one with this --->"
   }
   const readout = `${count} task${utils.pluralS(count)}`
   const overdueCount = tasks.filter((task) => task.overdueness > 0).length
@@ -53,6 +53,8 @@ const st = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     height: 100,
+    borderTopWidth: 0.2,
+    borderTopColor: PlatformColor("systemGray"),
   },
   // homeButton: {
   //   marginTop: 5,
@@ -64,7 +66,7 @@ const st = StyleSheet.create({
     marginRight: 20,
   },
   tasksReadout: {
-    marginTop: 22,
+    marginTop: 24,
     position: "relative",
     fontSize: 18,
     // fontWeight: "bold",

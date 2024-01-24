@@ -1,6 +1,6 @@
 import * as rn from "react-native"
 import * as rnav from "@react-navigation/native"
-import * as store from "../../store.js"
+import * as store from "../../store/store.js"
 
 import EditTask from "./EditTask.js"
 import NewTask from "./NewTask.js"
@@ -10,11 +10,18 @@ function TaskScreen({ route }) {
   const isNewTask = taskId === "new"
   const navigation = rnav.useNavigation()
   const task = store.useStore((state) => state.tasks[taskId])
+  const createTask = store.useStore((state) => state.createTask)
   const setTaskName = store.useStore((state) => state.setTaskName)
+  const setTaskInterval = store.useStore((state) => state.setTaskInterval)
   const deleteTask = store.useStore((state) => state.deleteTask)
 
-  function onOpenIntervals() {
-    navigation.navigate("Intervals", { taskId })
+  function onCreateTask() {
+    createTask()
+    navigation.goBack()
+  }
+
+  function onSelectInterval(days) {
+    setTaskInterval(taskId, days)
   }
 
   function onDeleteTask() {
@@ -26,6 +33,10 @@ function TaskScreen({ route }) {
     setTaskName(taskId, name)
   }
 
+  if (!task) {
+    return null
+  }
+
   return (
     <rn.View style={st.container}>
       <rn.SafeAreaView>
@@ -33,14 +44,15 @@ function TaskScreen({ route }) {
           <NewTask
             task={task}
             onChangeTaskName={onChangeTaskName}
-            onOpenIntervals={onOpenIntervals}
+            onSelectInterval={onSelectInterval}
+            onCreateTask={onCreateTask}
           />
         ) : (
           <EditTask
             task={task}
             onChangeTaskName={onChangeTaskName}
             onDeleteTask={onDeleteTask}
-            onOpenIntervals={onOpenIntervals}
+            onSelectInterval={onSelectInterval}
           />
         )}
       </rn.SafeAreaView>

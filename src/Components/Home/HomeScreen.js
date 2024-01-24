@@ -1,6 +1,6 @@
 import * as rn from "react-native"
 import * as rnav from "@react-navigation/native"
-import * as store from "../../store.js"
+import * as store from "../../store/store.js"
 
 import Footer from "./Footer.js"
 import TaskList from "./TaskList.js"
@@ -13,6 +13,7 @@ function HomeScreen() {
   const setTaskListSectionTitle = store.useStore(
     (state) => state.setTaskListSectionTitle
   )
+  const dismissTask = store.useStore((state) => state.dismissTask)
 
   function onRequestAddTask() {
     navigation.navigate("Task", { taskId: "new" })
@@ -20,6 +21,14 @@ function HomeScreen() {
 
   function onRequestEditTask(taskId) {
     navigation.navigate("Task", { taskId })
+  }
+
+  function onRequestDismissTask(taskId) {
+    dismissTask(taskId)
+  }
+
+  if (!tasksList) {
+    return null
   }
 
   return (
@@ -30,6 +39,7 @@ function HomeScreen() {
           dueTasks={dueTasks}
           onChangeActiveSectionTitle={setTaskListSectionTitle}
           onRequestEditTask={onRequestEditTask}
+          onRequestDismissTask={onRequestDismissTask}
         />
       </rn.View>
       <Footer tasksList={tasksList} onRequestAddTask={onRequestAddTask} />
@@ -39,7 +49,7 @@ function HomeScreen() {
 
 const st = rn.StyleSheet.create({
   container: {
-    margin: 10,
+    marginHorizontal: 10,
     flex: 1,
   },
 })

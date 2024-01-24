@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { SectionList } from "react-native"
+import * as rne from "react-native-elements"
 import { useHeaderHeight } from "@react-navigation/elements"
 
 import * as utils from "../../utils.js"
 
 import SectionHeader from "../SectionHeader.js"
 import TaskListItem from "./TaskListItem.js"
+import TaskListEmptyState from "./TaskListEmptyState.js"
 
 function tagFirstAndLast(arr) {
   return arr.map((task, ix, arr) => {
@@ -23,6 +25,7 @@ function TaskList({
   dueTasks,
   onChangeActiveSectionTitle,
   onRequestEditTask,
+  onRequestDismissTask,
 }) {
   const headerHeight = useHeaderHeight()
   const [sectionOffsets, setSectionOffsets] = useState([])
@@ -43,6 +46,11 @@ function TaskList({
       title: `Ready to Go  (${duLen} task${utils.pluralS(duLen)})`,
       data: tagFirstAndLast(dueTasks),
     })
+    sections.push({
+      ix: 2,
+      title: `Up to date  (${duLen} task${utils.pluralS(duLen)})`,
+      data: tagFirstAndLast(dueTasks),
+    })
   }
 
   function renderItem({ item: { task, isFirst, isLast }, index, section }) {
@@ -53,6 +61,7 @@ function TaskList({
         isLast={isLast}
         onLayout={(ev) => onLayoutChild(ev, index, section)}
         onRequestEditTask={() => onRequestEditTask(task.id)}
+        onRequestDismissTask={() => onRequestDismissTask(task.id)}
       />
     )
   }
@@ -125,6 +134,8 @@ function TaskList({
       // viewabilityConfig={{
       //   itemVisiblePercentThreshold: 100,
       // }}
+      ListEmptyComponent={<TaskListEmptyState />}
+      ListFooterComponent={<SectionHeader />}
     />
   )
 }

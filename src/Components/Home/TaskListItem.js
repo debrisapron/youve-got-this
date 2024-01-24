@@ -12,7 +12,14 @@ function getBadgeStatus(task) {
   return null
 }
 
-function TaskListItem({ task, isFirst, isLast, onLayout, onRequestEditTask }) {
+function TaskListItem({
+  task,
+  isFirst,
+  isLast,
+  onLayout,
+  onRequestEditTask,
+  onRequestDismissTask,
+}) {
   let itemStyle = {}
   if (isFirst) {
     itemStyle = st.firstItem
@@ -35,6 +42,7 @@ function TaskListItem({ task, isFirst, isLast, onLayout, onRequestEditTask }) {
         reverse
         color="#0C0"
         iconProps={{ size: 40 }}
+        onPress={onRequestDismissTask}
         // style={{ transform: [{ rotateX: "180deg" }, { rotateY: "180deg" }] }}
         // onPress={({ nativeEvent: nev }) => {
         //   console.log(nev);

@@ -1,6 +1,5 @@
-import * as zustand from "zustand"
-import * as zcomp from "zustand-computed"
-import * as utils from "./utils.js"
+import * as zmw from "zustand/middleware"
+import * as utils from "../src/utils.js"
 
 const TEST_TASKS = {
   e_Jyu4XpP1SI8ELoOckSD: {
@@ -33,7 +32,7 @@ const TEST_TASKS = {
   e1FT3vsNMlR0wn5KJL0m_: {
     name: "Pills",
     interval: 1,
-    done: utils.now().subtract(utils.days(1)),
+    done: utils.now().subtract(utils.days(1)).toString(),
     prevDone: utils.now().subtract(utils.days(5)).toString(),
   },
   M_qzsbxr_Fz5L0zoP0qyu: {
@@ -131,121 +130,18 @@ const TEST_TASKS = {
   },
 }
 
-function getOverdueness(task) {
-  const daysOld = utils.daysSince(task.done)
-  return daysOld - task.interval
+const persistConfig = {
+  name: "app-state",
+  storage: zmw.createJSONStorage(() => ({
+    getItem: (name) => JSON.stringify({ state: { _tasks: TEST_TASKS } }),
+    setItem: (name, value) => {},
+    removeItem: (name) => {},
+  })),
+  partialize: (state) => ({ _tasks: state._tasks }),
 }
 
-const allowedIntervals = [1, 2, 3, 4, 7, 14]
-
-function getIntervalInWords(interval) {
-  if (interval === 1) {
-    return "Daily"
-  } else if (interval === 2) {
-    return "Every other day"
-  } else if (interval === 7) {
-    return "Weekly"
-  } else if (interval === 14) {
-    return "Biweekly"
-  }
-  return `Every ${interval} days`
+function persist(store) {
+  return zmw.persist(store, persistConfig)
 }
 
-function getIntervals() {
-  return allowedIntervals.map((i) => ({
-    days: i,
-    label: getIntervalInWords(i),
-  }))
-}
-
-function decorateTask(id, task) {
-  return {
-    ...task,
-    id,
-    intervalInWords: getIntervalInWords(task.interval),
-    overdueness: getOverdueness(task),
-  }
-}
-
-function filterOverdue(tasks) {
-  return tasks.filter((task) => task.overdueness > 0)
-}
-
-function filterDue(tasks) {
-  return tasks.filter((task) => task.overdueness === 0)
-}
-
-function getTasksList(state) {
-  return Object.entries(state._tasks)
-    .map(([id, task]) => decorateTask(id, task))
-    .sort((a, b) => b.overdueness - a.overdueness || a.interval - b.interval)
-}
-
-function computeState(state) {
-  const tasksList = getTasksList(state)
-  return {
-    tasksList,
-    tasks: Object.fromEntries(tasksList.map((task) => [task.id, task])),
-    dueTasksList: filterDue(tasksList),
-    overdueTasksList: filterOverdue(tasksList),
-    intervals: getIntervals(),
-  }
-}
-
-export const useStore = zustand.create(
-  zcomp.computed((set) => {
-    function updateTask(id, patch) {
-      const cb = typeof patch === "function" && patch
-      const isNew = id === "new"
-
-      if (id === "new") {
-        set(({ _new }) => {
-          const diff = cb ? cb(_new) : patch
-          return { _new: { ..._new, ...diff } }
-        })
-        return
-      }
-
-      set(({ _tasks }) => {
-        const diff = cb ? cb(_tasks[id]) : patch
-        return {
-          _tasks: {
-            ..._tasks,
-            [id]: { ..._tasks[id], ...diff },
-          },
-        }
-      })
-    }
-
-    return {
-      _tasks: TEST_TASKS,
-      _new: null,
-
-      taskListSectionTitle: null,
-
-      dismissTask(id) {
-        updateTask(id, (task) => ({
-          prevDone: task.done,
-          done: utils.now(),
-        }))
-      },
-
-      setTaskName(id, name) {
-        updateTask(id, { name })
-      },
-
-      setTaskInterval(id, interval) {
-        updateTask(id, { interval })
-      },
-
-      setTaskListSectionTitle: (title) => set({ taskListSectionTitle: title }),
-
-      deleteTask(id) {
-        set(({ _tasks }) => {
-          const { [id]: _, ...rest } = _tasks
-          return { _tasks: rest }
-        })
-      },
-    }
-  }, computeState)
-)
+export { persist }
