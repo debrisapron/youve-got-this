@@ -10,6 +10,7 @@ function HomeScreen() {
   const tasksList = store.useStore((state) => state.tasksList)
   const overdueTasks = store.useStore((state) => state.overdueTasksList)
   const dueTasks = store.useStore((state) => state.dueTasksList)
+  const doneTasks = store.useStore((state) => state.doneTasksList)
   const setTaskListSectionTitle = store.useStore(
     (state) => state.setTaskListSectionTitle
   )
@@ -34,13 +35,16 @@ function HomeScreen() {
   return (
     <>
       <rn.View style={st.container}>
-        <TaskList
-          overdueTasks={overdueTasks}
-          dueTasks={dueTasks}
-          onChangeActiveSectionTitle={setTaskListSectionTitle}
-          onRequestEditTask={onRequestEditTask}
-          onRequestDismissTask={onRequestDismissTask}
-        />
+        <rn.SafeAreaView>
+          <TaskList
+            overdueTasks={overdueTasks}
+            dueTasks={dueTasks}
+            doneTasks={doneTasks}
+            onChangeActiveSectionTitle={setTaskListSectionTitle}
+            onRequestEditTask={onRequestEditTask}
+            onRequestDismissTask={onRequestDismissTask}
+          />
+        </rn.SafeAreaView>
       </rn.View>
       <Footer tasksList={tasksList} onRequestAddTask={onRequestAddTask} />
     </>

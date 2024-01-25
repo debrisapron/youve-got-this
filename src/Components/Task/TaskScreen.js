@@ -62,7 +62,7 @@ function TaskScreen({ route }) {
 
 const st = rn.StyleSheet.create({
   container: {
-    margin: 10,
+    marginHorizontal: 10,
     flex: 1,
   },
 })

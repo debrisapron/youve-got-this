@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from "react-native"
-import { Badge, Icon, ListItem } from "react-native-elements"
+import * as rn from "react-native"
+import * as rne from "react-native-elements"
 
 function getBadgeStatus(task) {
   const od = task.overdueness
@@ -16,10 +16,10 @@ function TaskListItem({
   task,
   isFirst,
   isLast,
-  onLayout,
   onRequestEditTask,
   onRequestDismissTask,
 }) {
+  const isDone = task.overdueness < 0
   let itemStyle = {}
   if (isFirst) {
     itemStyle = st.firstItem
@@ -27,68 +27,54 @@ function TaskListItem({
     itemStyle = st.lastItem
   }
   const badgeStatus = getBadgeStatus(task)
+
   return (
-    <ListItem
+    <rne.ListItem
       bottomDivider={!isLast}
       containerStyle={itemStyle}
-      onLayout={onLayout}
       onPress={onRequestEditTask}
     >
-      <Icon
-        // type="material-community"
-        // name="silverware-fork"
-        type="ionicon"
-        name="checkmark-sharp"
-        reverse
-        color="#0C0"
-        iconProps={{ size: 40 }}
-        onPress={onRequestDismissTask}
-        // style={{ transform: [{ rotateX: "180deg" }, { rotateY: "180deg" }] }}
-        // onPress={({ nativeEvent: nev }) => {
-        //   console.log(nev);
-        //   fireTheCannon({
-        //     taskId: task.id,
-        //     origin: { x: nev.pageX, y: 932 - nev.pageY },
-        //   });
-        // }}
-      />
-      <ListItem.Content>
-        <ListItem.Title style={st.itemTitle}>
+      {!isDone && (
+        <rne.Icon
+          type="ionicon"
+          name="checkmark-sharp"
+          reverse
+          color="#0C0"
+          iconProps={{ size: 40 }}
+          onPress={onRequestDismissTask}
+        />
+      )}
+      <rne.ListItem.Content>
+        <rne.ListItem.Title style={[st.itemTitle, isDone && st.done]}>
           {task.name}
           {badgeStatus && (
             <>
               &nbsp;
-              <Badge
+              <rne.Badge
                 value={task.overdueness}
                 status={badgeStatus}
                 textStyle={st.badge}
               />
             </>
           )}
-        </ListItem.Title>
-        <ListItem.Subtitle style={st.itemSubtitle}>
+        </rne.ListItem.Title>
+        <rne.ListItem.Subtitle style={[st.itemSubtitle, isDone && st.done]}>
           {task.intervalInWords}
           {task.overdueness > task.interval && isFirst && (
-            <Text style={st.overdueWarning}>&nbsp;&nbsp;Do this first!</Text>
+            <rn.Text style={st.overdueWarning}>
+              &nbsp;&nbsp;Do this first!
+            </rn.Text>
           )}
-        </ListItem.Subtitle>
-      </ListItem.Content>
-      {/* <ListItem.Content right> */}
-      {/* <ListItem.Title right> */}
-      {/* <Badge value={task.overdueness} status="error" textStyle={st.badge} /> */}
-      {/* </ListItem.Title> */}
-      {/* <ListItem.Subtitle right style={st.itemSubtitle}>
-        {task.overdueness > task.interval && isFirst && (
-          <Text style={st.overdueWarning}>Do this first!</Text>
-        )}
-      </ListItem.Subtitle> */}
-      {/* </ListItem.Content> */}
-      <ListItem.Chevron color="black" />
-    </ListItem>
+        </rne.ListItem.Subtitle>
+      </rne.ListItem.Content>
+      <rne.ListItem.Chevron
+        color={isDone ? rn.PlatformColor("systemGray") : "black"}
+      />
+    </rne.ListItem>
   )
 }
 
-const st = StyleSheet.create({
+const st = rn.StyleSheet.create({
   badge: {
     position: "relative",
     fontSize: 16,
@@ -105,6 +91,9 @@ const st = StyleSheet.create({
     borderBottomRightRadius: 15,
   },
   itemTitle: { fontSize: 20, fontWeight: 700 },
+  done: {
+    color: rn.PlatformColor("systemGray"),
+  },
   itemSubtitle: { fontSize: 16, marginTop: 5 },
   overdueWarning: { color: "red", fontStyle: "italic" },
 })

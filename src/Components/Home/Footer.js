@@ -1,5 +1,5 @@
-import { PlatformColor, View, StyleSheet, Text } from "react-native"
-import { FAB } from "react-native-elements"
+import * as rn from "react-native"
+import * as rne from "react-native-elements"
 
 import * as utils from "../../utils.js"
 
@@ -19,34 +19,21 @@ function getTasksReadout(tasks) {
 function Footer({ tasksList, onRequestAddTask }) {
   const tasksReadout = getTasksReadout(tasksList)
 
-  // {/* <Icon
-  //   type="ionicon"
-  //   name="home"
-  //   iconProps={{ size: 36 }}
-  //   style={st.homeButton}
-  // /> */}
-  // {/* <Icon
-  //   type="ionicon"
-  //   name="add-circle"
-  //   iconProps={{ size: 40 }}
-  //   style={st.addButton}
-  // /> */}
-
   return (
-    <View style={st.footer}>
-      <Text style={st.tasksReadout}>{tasksReadout}</Text>
+    <rn.View style={st.footer}>
+      <rn.Text style={st.tasksReadout}>{tasksReadout}</rn.Text>
 
-      <FAB
+      <rne.FAB
         icon={{ name: "add", color: "white" }}
-        color={PlatformColor("systemBlue")}
+        color={rn.PlatformColor("systemBlue")}
         style={st.addButton}
         onPress={onRequestAddTask}
       />
-    </View>
+    </rn.View>
   )
 }
 
-const st = StyleSheet.create({
+const st = rn.StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -54,12 +41,8 @@ const st = StyleSheet.create({
     backgroundColor: "white",
     height: 100,
     borderTopWidth: 0.2,
-    borderTopColor: PlatformColor("systemGray"),
+    borderTopColor: rn.PlatformColor("systemGray"),
   },
-  // homeButton: {
-  //   marginTop: 5,
-  //   marginLeft: 20,
-  // },
   addButton: {
     position: "relative",
     top: -2,
@@ -69,10 +52,9 @@ const st = StyleSheet.create({
     marginTop: 24,
     position: "relative",
     fontSize: 18,
-    // fontWeight: "bold",
     fontStyle: "italic",
     marginLeft: 20,
-    color: PlatformColor("label"),
+    color: rn.PlatformColor("label"),
   },
 })
 

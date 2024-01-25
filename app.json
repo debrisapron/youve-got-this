@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "forkinit",
-    "slug": "forkinit",
-    "version": "1.0.0",
+    "name": "youve-got-this",
+    "slug": "youve-got-this",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,7 +14,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.forkinit"
+      "bundleIdentifier": "com.anonymous.youve-got-this"
     },
     "android": {
       "adaptiveIcon": {

@@ -11,6 +11,7 @@ function EditTask({ task, onChangeTaskName, onDeleteTask, onSelectInterval }) {
         onChangeTaskName={onChangeTaskName}
         onSelectInterval={onSelectInterval}
       />
+
       <SectionHeader />
       <DeleteTaskButton onDeleteTask={onDeleteTask} />
     </>

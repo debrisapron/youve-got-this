@@ -1,30 +1,22 @@
 import * as rn from "react-native"
-import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-// import { useFonts } from "expo-font"
+import * as rnn from "@react-navigation/native"
+import * as rnnStack from "@react-navigation/native-stack"
+import * as store from "../store/store.js"
 
 import HomeScreen from "./Home/HomeScreen.js"
 import TaskScreen from "./Task/TaskScreen.js"
 
-import * as store from "../store/store.js"
+const Stack = rnnStack.createNativeStackNavigator()
 
-const Stack = createNativeStackNavigator()
-
-const Root = () => {
-  // const [fontsLoaded] = useFonts({
-  //   FactuallyHandwriting: require("../assets/FactuallyHandwriting.otf"),
-  // })
+function Root() {
+  // TODO move this from store to a callback
   const taskListSectionTitle = store.useStore(
     (state) => state.taskListSectionTitle
   )
   const tasks = store.useStore((state) => state.tasks)
-  // console.log("tasks", tasks)
-  // if (!fontsLoaded) {
-  //   return <Text>Loading...</Text>
-  // }
 
   return (
-    <NavigationContainer>
+    <rnn.NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
@@ -60,7 +52,7 @@ const Root = () => {
           }}
         />
       </Stack.Navigator>
-    </NavigationContainer>
+    </rnn.NavigationContainer>
   )
 }
 

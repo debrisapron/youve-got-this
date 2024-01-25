@@ -50,6 +50,10 @@ function filterDue(tasks) {
   return tasks.filter((task) => task.overdueness === 0)
 }
 
+function filterDone(tasks) {
+  return tasks.filter((task) => task.overdueness < 0)
+}
+
 function getTasksList(state) {
   return Object.entries(state._tasks)
     .map(([id, task]) => decorateTask(id, task))
@@ -65,6 +69,7 @@ function computeState(state) {
     ),
     dueTasksList: filterDue(tasksList),
     overdueTasksList: filterOverdue(tasksList),
+    doneTasksList: filterDone(tasksList),
   }
 }
 

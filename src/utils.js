@@ -44,14 +44,21 @@ export function targetValue(action) {
   return withPayload((e) => [action, e.target.value])
 }
 
+function localPlainDate(instant) {
+  return Temporal.PlainDate.from(
+    instant.toZonedDateTimeISO(Temporal.Now.timeZoneId())
+  )
+}
+
+// This (should) tell us the number of midnights between the
+// given instant & the current instant, in the local timezone.
 export function daysSince(instant) {
   if (!instant) {
     return null
   }
-  const hoursSince = now().since(Temporal.Instant.from(instant), {
-    largestUnit: "hour",
-  }).hours
-  return Math.floor(hoursSince / 24)
+  const today = localPlainDate(now())
+  const otherDay = localPlainDate(Temporal.Instant.from(instant))
+  return today.since(otherDay).days
 }
 
 export function days(n) {

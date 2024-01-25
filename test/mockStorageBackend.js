@@ -130,18 +130,16 @@ const TEST_TASKS = {
   },
 }
 
-const persistConfig = {
-  name: "app-state",
-  storage: zmw.createJSONStorage(() => ({
-    getItem: (name) => JSON.stringify({ state: { _tasks: TEST_TASKS } }),
-    setItem: (name, value) => {},
-    removeItem: (name) => {},
-  })),
-  partialize: (state) => ({ _tasks: state._tasks }),
-}
-
 function persist(store) {
-  return zmw.persist(store, persistConfig)
+  return zmw.persist(store, {
+    name: "app-state",
+    storage: zmw.createJSONStorage(() => ({
+      getItem: () => JSON.stringify({ state: { _tasks: TEST_TASKS } }),
+      setItem: () => {},
+      removeItem: () => {},
+    })),
+    partialize: (state) => ({ _tasks: state._tasks }),
+  })
 }
 
 export { persist }

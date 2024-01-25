@@ -11,6 +11,7 @@ function NewTask({ task, onChangeTaskName, onSelectInterval, onCreateTask }) {
         onChangeTaskName={onChangeTaskName}
         onSelectInterval={onSelectInterval}
       />
+
       <SectionHeader />
       <CreateTaskButton
         disabled={!task?.name?.trim()}
