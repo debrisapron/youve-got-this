@@ -6,13 +6,11 @@ const TEST_TASKS = {
     name: "Kitty Litter",
     done: utils.now().subtract(utils.days(0)).toString(),
     interval: 2,
-    prevDone: utils.now().subtract(utils.days(3)).toString(),
   },
   "6T_dE-G5VYrP7fCwkMm5X": {
     name: "Hoover",
     done: utils.now().subtract(utils.days(3)).toString(),
     interval: 3,
-    prevDone: utils.now().subtract(utils.days(5)).toString(),
   },
   yGTNedXnPm3lICLye3z9p: {
     name: "Laundry",
@@ -33,19 +31,16 @@ const TEST_TASKS = {
     name: "Pills",
     interval: 1,
     done: utils.now().subtract(utils.days(1)).toString(),
-    prevDone: utils.now().subtract(utils.days(5)).toString(),
   },
   M_qzsbxr_Fz5L0zoP0qyu: {
     name: "Brush Teeth",
     interval: 1,
     done: utils.now().subtract(utils.days(0)).toString(),
-    prevDone: utils.now().subtract(utils.days(5)).toString(),
   },
   "Aa8XNoaStuQ7kNXsK-hzK": {
     name: "Shower",
     interval: 2,
     done: utils.now().subtract(utils.days(3)).toString(),
-    prevDone: utils.now().subtract(utils.days(5)).toString(),
   },
   "3Qp4HGnIbfUfw4hX6t8vt": {
     name: "DD: Homework",
@@ -56,7 +51,6 @@ const TEST_TASKS = {
     name: "DD: Clean Room",
     interval: 2,
     done: utils.now().subtract(utils.days(3)).toString(),
-    prevDone: utils.now().subtract(utils.days(5)).toString(),
   },
   "LDBsvdtKmbQQQHlZ-kpB3": {
     name: "DD: Piano Practice",
@@ -72,61 +66,51 @@ const TEST_TASKS = {
     name: "DD: Kids Klub Stuff",
     interval: 7,
     done: utils.now().subtract(utils.days(0)).toString(),
-    prevDone: utils.now().subtract(utils.days(5)).toString(),
   },
   Cj37Iqu6jm3K7kne4alfg: {
     name: "Cats Water Bowl",
     done: utils.now().subtract(utils.days(0)).toString(),
     interval: 2,
-    prevDone: utils.now().subtract(utils.days(3)).toString(),
   },
   "oLzw7tKguB-HsLifghGIN": {
     name: "Take Out Trash",
     interval: 2,
     done: utils.now().subtract(utils.days(1)).toString(),
-    prevDone: utils.now().subtract(utils.days(5)).toString(),
   },
   gDMLlrY7iX224SGylJtOn: {
     name: "Wifey",
     interval: 7,
     done: utils.now().subtract(utils.days(2)).toString(),
-    prevDone: null,
   },
   H4OXOSeqnzgAVtxT9SIJJ: {
     name: "Groceries",
     interval: 4,
     done: utils.now().subtract(utils.days(1)).toString(),
-    prevDone: utils.now().subtract(utils.days(2)).toString(),
   },
   "4GhDNMgf2gyV2m12pNYkz": {
     name: "Paper Mail",
     interval: 14,
     done: utils.now().subtract(utils.days(1)).toString(),
-    prevDone: null,
   },
   nH8X3fvSbZkELlF7nGH16: {
     name: "Email",
     interval: 3,
     done: utils.now().subtract(utils.days(1)).toString(),
-    prevDone: null,
   },
   "1etJ0MVdTayIWNDM4F00j": {
     name: "Jobhunt",
     interval: 1,
     done: utils.now().subtract(utils.days(1)).toString(),
-    prevDone: null,
   },
   GQx0mZz7IOu51NZ1tPogD: {
     name: "Cat's Water Fountain",
     interval: 4,
     done: utils.now().subtract(utils.days(1)).toString(),
-    prevDone: null,
   },
   "wIcr03-atNijXyWCsos9i": {
     name: "Clear Sink",
     interval: 1,
     done: utils.now().subtract(utils.days(1)).toString(),
-    prevDone: null,
   },
 }
 

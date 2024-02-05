@@ -1,14 +1,14 @@
-import { Alert, PlatformColor, StyleSheet } from "react-native"
-import { Button } from "react-native-elements"
+import * as rn from "react-native"
+
+import FullWidthButton from "./FullWidthButton"
 
 function DeleteTaskButton({ onDeleteTask }) {
   return (
-    <Button
+    <FullWidthButton
       title="Delete Task"
-      titleStyle={st.deleteButtonTitle}
-      buttonStyle={st.deleteButton}
+      color={rn.PlatformColor("systemRed")}
       onPress={() => {
-        Alert.alert(
+        rn.Alert.alert(
           "Delete Task?",
           "This task will be permanently deleted from your tasks list.",
           [
@@ -27,18 +27,5 @@ function DeleteTaskButton({ onDeleteTask }) {
     />
   )
 }
-
-const st = StyleSheet.create({
-  deleteButton: {
-    backgroundColor: "lightgray",
-    borderColor: "transparent",
-    borderWidth: 0,
-    borderRadius: 5,
-  },
-  deleteButtonTitle: {
-    fontWeight: "700",
-    color: PlatformColor("systemRed"),
-  },
-})
 
 export default DeleteTaskButton

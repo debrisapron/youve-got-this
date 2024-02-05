@@ -14,6 +14,11 @@ function TaskScreen({ route }) {
   const setTaskName = store.useStore((state) => state.setTaskName)
   const setTaskInterval = store.useStore((state) => state.setTaskInterval)
   const deleteTask = store.useStore((state) => state.deleteTask)
+  const dismissTask = store.useStore((state) => state.dismissTask)
+
+  function onDismissTask() {
+    dismissTask(taskId)
+  }
 
   function onCreateTask() {
     createTask()
@@ -53,6 +58,7 @@ function TaskScreen({ route }) {
             onChangeTaskName={onChangeTaskName}
             onDeleteTask={onDeleteTask}
             onSelectInterval={onSelectInterval}
+            onDismissTask={onDismissTask}
           />
         )}
       </rn.SafeAreaView>

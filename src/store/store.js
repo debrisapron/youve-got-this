@@ -8,11 +8,6 @@ import * as storageBackend from "./storageBackend.js"
 
 //// COMPUTED STATE ////
 
-function getOverdueness(task) {
-  const daysOld = utils.daysSince(task.done)
-  return daysOld - task.interval
-}
-
 const allowedIntervals = [1, 2, 3, 4, 7, 14]
 
 function getIntervalInWords(interval) {
@@ -34,11 +29,14 @@ const intervals = allowedIntervals.map((i) => ({
 }))
 
 function decorateTask(id, task) {
+  const daysSinceLastDone = utils.daysSince(task.done)
+  const overdueness = daysSinceLastDone - task.interval
   return {
     ...task,
     id,
     intervalInWords: getIntervalInWords(task.interval),
-    overdueness: getOverdueness(task),
+    daysSinceLastDone,
+    overdueness,
   }
 }
 
@@ -78,7 +76,6 @@ function getNewTask() {
     name: "",
     interval: 1,
     done: null,
-    prevDone: null,
   }
 }
 
@@ -98,12 +95,16 @@ function getStoreConfig(set, get) {
       return
     }
 
-    set(({ _tasks }) => {
+    set(({ _tasks, _history }) => {
       const diff = cb ? cb(_tasks[id]) : patch
       return {
         _tasks: {
           ..._tasks,
           [id]: { ..._tasks[id], ...diff },
+        },
+        _history: {
+          ..._history,
+          [id]: [...(_history[id] || []), { t: utils.now().toString(), diff }],
         },
       }
     })
@@ -112,6 +113,7 @@ function getStoreConfig(set, get) {
   // Store configuration object
   return {
     _tasks: {},
+    _history: {},
     _new: getNewTask(),
 
     taskListSectionTitle: null,
@@ -129,7 +131,6 @@ function getStoreConfig(set, get) {
 
     dismissTask(id) {
       updateTask(id, (task) => ({
-        prevDone: task.done,
         done: utils.now().toString(),
       }))
     },
@@ -142,6 +143,7 @@ function getStoreConfig(set, get) {
       updateTask(id, { interval })
     },
 
+    // TODO move out of store
     setTaskListSectionTitle: (title) => set({ taskListSectionTitle: title }),
 
     deleteTask(id) {

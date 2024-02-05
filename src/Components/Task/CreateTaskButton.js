@@ -1,29 +1,16 @@
-import { PlatformColor, StyleSheet } from "react-native"
-import { Button } from "react-native-elements"
+import * as rn from "react-native"
+
+import FullWidthButton from "./FullWidthButton"
 
 function CreateTaskButton({ disabled, onCreateTask }) {
   return (
-    <Button
+    <FullWidthButton
       title="Create Task"
-      titleStyle={st.createButtonTitle}
-      buttonStyle={st.createButton}
+      color={rn.PlatformColor("systemBlue")}
       onPress={onCreateTask}
       disabled={disabled}
     />
   )
 }
-
-const st = StyleSheet.create({
-  createButton: {
-    backgroundColor: "lightgray",
-    borderColor: "transparent",
-    borderWidth: 0,
-    borderRadius: 5,
-  },
-  createButtonTitle: {
-    fontWeight: "700",
-    color: PlatformColor("systemBlue"),
-  },
-})
 
 export default CreateTaskButton
