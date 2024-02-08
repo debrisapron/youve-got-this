@@ -1,6 +1,6 @@
 # You've Got This
 
-A minimalist habit tracker app for iPhone made with React Native.
+A minimalist habit tracker app for iPhone made with React Native. Not finished yet!
 
 # Developing
 
